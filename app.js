@@ -23,32 +23,36 @@ let keys={
 }
 
 function start(){
-    player.inplay=true;
-    player.plane=document.createElement("div");
-    player.plane.setAttribute("class","plane");
-    gameArea.appendChild(player.plane);
-    requestAnimationFrame(playGame);
-    player.x=player.plane.offsetLeft;
-    player.y=player.plane.offsetTop;
+    gameMsg.classList.add("hide")
+    if(!player.inplay){
+        player.inplay=true;
+        player.plane=document.createElement("div");
+        player.plane.setAttribute("class","plane");
+        gameArea.appendChild(player.plane);
+        requestAnimationFrame(playGame);
+        player.x=player.plane.offsetLeft;
+        player.y=player.plane.offsetTop;
+    }
+    
 }
 
 function playGame(){
     if(player.inplay){
         console.log(keys);
 
-        if(keys.ArrowUp){
+        if(keys.ArrowUp&&player.y>0){
             player.y-=player.speed;
         }
 
-        if(keys.ArrowDown){
+        if(keys.ArrowDown && player.y<250){
             player.y+=player.speed;
         }
 
-        if(keys.ArrowRight){
+        if(keys.ArrowRight&& player.x<(gameArea.offsetWidth-60)){
             player.x+=player.speed;
         }
 
-        if(keys.ArrowLeft){
+        if(keys.ArrowLeft&&player.x>0){
             player.x-=player.speed;
         }
 

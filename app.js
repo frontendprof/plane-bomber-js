@@ -26,6 +26,7 @@ function start(){
     gameMsg.classList.add("hide")
     if(!player.inplay){
         player.inplay=true;
+        player.score=2000;
         player.plane=document.createElement("div");
         player.plane.setAttribute("class","plane");
         gameArea.appendChild(player.plane);
@@ -54,6 +55,17 @@ function playGame(){
 
         if(keys.ArrowLeft&&player.x>0){
             player.x-=player.speed;
+        }
+
+        player.x+=(player.speed*1.3);
+        if(player.x>gameArea.offsetWidth){
+            player.x=0;
+            player.score-=100;
+        }
+
+        player.score--;
+        if(player.score<0){
+            player.score=0;
         }
 
         player.plane.style.left=player.x+"px";

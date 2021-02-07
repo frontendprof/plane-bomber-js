@@ -26,6 +26,7 @@ function start(){
     gameMsg.classList.add("hide")
     if(!player.inplay){
         player.inplay=true;
+        makeTarget();
         player.score=2000;
         player.plane=document.createElement("div");
         player.plane.setAttribute("class","plane");
@@ -37,11 +38,21 @@ function start(){
     
 }
 
+
+function makeTarget(){
+    player.base=document.createElement("div")
+    player.base.setAttribute("class","base")
+    player.base.style.width=Math.floor(Math.random()*200)+10+"px";
+    player.base.style.height=Math.floor(Math.random()*100)+100+"px";
+    player.base.style.left=Math.floor(Math.random()*(gameArea.offsetWidth-200))+100+"px";
+    gameArea.append(player.base)
+}
+
 function playGame(){
     if(player.inplay){
         console.log(keys);
 
-        if(keys.ArrowUp&&player.y>0){
+        if(keys.ArrowUp&&player.y>65){
             player.y-=player.speed;
         }
 
@@ -57,7 +68,7 @@ function playGame(){
             player.x-=player.speed;
         }
 
-        player.x+=(player.speed*1.3);
+        player.x+=(player.speed*1.4);
         if(player.x>gameArea.offsetWidth){
             player.x=0;
             player.score-=100;
@@ -68,10 +79,13 @@ function playGame(){
             player.score=0;
         }
 
+        player
+
         player.plane.style.left=player.x+"px";
         player.plane.style.top=player.y+"px";
 
-        window.requestAnimationFrame(playGame)
+        window.requestAnimationFrame(playGame);
+        score.innerHTML="Your score is: "+player.score
     }
 }
 

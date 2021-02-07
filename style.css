@@ -13,6 +13,16 @@
     display: none;
 }
 
+.score{
+    background-color: #444;
+    color:white;
+    height: 40px;
+    text-align: center;
+    font-size:1.5rem;
+    font-family:fantasy;
+    padding-top:20px;
+}
+
 .gameMsg{
     position: absolute;
     background-color: aliceblue;
@@ -21,4 +31,15 @@
     width: 60%;
     text-align: center;
     font-size:2rem;
+}
+
+.base{
+    position:absolute;
+    bottom:0px;
+    width: 50px;
+    height: 100px;
+    color:white;
+    background-color: #222;
+    text-align: center;
+    font-size: 1rem;
 }

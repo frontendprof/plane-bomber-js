@@ -28,6 +28,9 @@ function start(){
         player.inplay=true;
         makeTarget();
         player.score=2000;
+        player.ready=true;
+        player.activeBomb=0;
+        player.totalBombs=2;
         player.plane=document.createElement("div");
         player.plane.setAttribute("class","plane");
         gameArea.appendChild(player.plane);
@@ -45,12 +48,49 @@ function makeTarget(){
     player.base.style.width=Math.floor(Math.random()*200)+10+"px";
     player.base.style.height=Math.floor(Math.random()*100)+100+"px";
     player.base.style.left=Math.floor(Math.random()*(gameArea.offsetWidth-200))+100+"px";
-    gameArea.append(player.base)
+    gameArea.appendChild(player.base)
 }
+
+function makeBomb(){
+    console.log("bombing");
+    if(player.ready){
+        player.score-=300;
+        player.activeBomb++;
+        let bomb=document.createElement("div");
+        bomb.classList.add("bomb");
+        bomb.innerHTML=player.activeBomb;
+        bomb.y=player.y;
+        bomb.x=player.x;
+        bomb.style.left=bomb.x+"px";
+        bomb.style.top=bomb.y+"px";
+        gameArea.appendChild(bomb)
+        player.ready=false;
+        setTimeout(function(){
+            player.ready=true
+        },500)
+    }
+}
+
+function moveBomb(){
+    let bombs=document.querySelectorAll(".bomb");
+    bombs.forEach(function(item){
+        item.y+=5;
+        item.style.top=item.y+"px"
+        if(item.y>1000){
+            player.activeBomb--;
+            item.parentElement.removeChild(item)
+        }
+    })
+}
+
+
 
 function playGame(){
     if(player.inplay){
-        console.log(keys);
+        moveBomb();
+        if(keys.space){
+            makeBomb();
+        }
 
         if(keys.ArrowUp&&player.y>65){
             player.y-=player.speed;
@@ -91,13 +131,15 @@ function playGame(){
 
 function pressOn(e){
     e.preventDefault();
-    let tempKey=(e.key=="")?"space":e.key;
+    let tempKey= (e.key==" ") ? "space" : e.key;
     keys[tempKey]=true;
 
 }
 
+
+
 function pressOff(e){
     e.preventDefault();
-    let tempKey=(e.key=="")?"space":e.key;
+    let tempKey= (e.key==" ") ? "space" : e.key;
     keys[tempKey]=false;
 }

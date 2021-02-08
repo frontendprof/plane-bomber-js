@@ -52,7 +52,6 @@ function makeTarget(){
 }
 
 function makeBomb(){
-    console.log("bombing");
     if(player.ready){
         player.score-=300;
         player.activeBomb++;
@@ -80,9 +79,24 @@ function moveBomb(){
             player.activeBomb--;
             item.parentElement.removeChild(item)
         }
+
+        if(isCollide(item, player.base)){
+            console.log("crash");
+        }
     })
 }
 
+function isCollide(a,b){
+    let aRect=a.getBoundingClientRect()
+    let bRect=b.getBoundingClientRect()
+
+    return!(
+        aRect.bottom<bRect.top ||
+        aRect.top>bRect.bottom ||
+        aRect.right>bRect.left ||
+        aRect.left>bRect.right
+    )
+}
 
 
 function playGame(){
